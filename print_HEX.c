@@ -1,7 +1,7 @@
 #include "main.h"
 
 /**
- * print_hex -function that prints an hexgecimal number.
+ * print_HEX -function that prints an hexgecimal number.
  * @val: arguments.
  * Return: counter.
  */
@@ -19,8 +19,9 @@ int print_hex(va_list val)
 		counter++;
 	}
 	counter++;
-	array = malloc(counter * sizeof(int));
-
+	array = malloc(sizeof(int) * counter);
+	if ( array == NULL)
+		return (NULL)
 	for (i = 0; i < counter; i++)
 	{
 		array[i] = tem % 16;
@@ -29,7 +30,7 @@ int print_hex(va_list val)
 	for (i = counter - 1; i >= 0; i--)
 	{
 		if (array[i] > 9)
-			array[i] = array[i] + 39;
+			array[i] = array[i] + 7;
 		_putchar(array[i] + '0');
 	}
 	free(array);

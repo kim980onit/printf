@@ -19,17 +19,16 @@ int print_oct(va_list val)
 		counter++;
 	}
 	counter++;
-	array = malloc(counter * sizeof(int));
-
+	array = malloc(sizeof(int) * counter);
+	if (array == NULL)
+		return (NULL);
 	for (i = 0; i < counter; i++)
 	{
 		array[i] = tem % 8;
-		tem /= 8;
+		tem = tem / 8;
 	}
 	for (i = counter - 1; i >= 0; i--)
-	{
 		_putchar(array[i] + '0');
-	}
 	free(array);
 	return (counter);
 }
