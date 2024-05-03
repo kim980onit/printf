@@ -1,46 +1,37 @@
-#include "main.h"
+#include "holberton.h"
+
 /**
- * _printf - function that selects the correct function to print.
- * @format: identifier to look for.
- * Return: the length of the string.
+ * _printf - Receives the main string and all the necessary parameters to
+ * print a formated string
+ * @format: A string containing all the desired characters
+ * Return: A total count of the characters printed
  */
-int _printf(const char * const format, ...)
+int _printf(const char *format, ...)
 {
-	convert p[] = {
-		{"%s", print_string}, {"%c", print_char},
-		{"%%", print_percent},
-		{"%i", print_interger}, {"%d", print_decimal}, {"%r", print_revs},
-		{"%R", print_rot13}, {"%b", print_bin},
-		{"%u", print_unsigned},
-		{"%o", print_oct}, {"%x", print_HEX}, {"%X", print_hex},
-		{"%S", print_exc_string}, {"%p", print_pointer}
+	int printed_chars;
+	conver_t f_list[] = {
+		{"c", print_char},
+		{"s", print_string},
+		{"%", print_percent},
+		{"d", print_integer},
+		{"i", print_integer},
+		{"b", print_binary},
+		{"r", print_reversed},
+		{"R", rot13},
+		{"u", unsigned_integer},
+		{"o", print_octal},
+		{"x", print_hex},
+		{"X", print_heX},
+		{NULL, NULL}
 	};
+	va_list arg_list;
 
-	va_list args;
-	int i = 0, j, length = 0;
-
-	va_start(args, format);
-	if (format == NULL || (format[0] == '%' && format[1] == '\0'))
+	if (format == NULL)
 		return (-1);
 
-Here:
-	while (format[i] != '\0')
-	{
-		j = 13;
-		while (j >= 0)
-		{
-			if (p[j].ph[0] == format[i] && p[j].ph[1] == format[i + 1])
-			{
-				length += p[j].function(args);
-				i = i + 2;
-				goto Here;
-			}
-			j--;
-		}
-		_putchar(format[i]);
-		length++;
-		i++;
-	}
-	va_end(args);
-	return (length);
+	va_start(arg_list, format);
+	/*Calling parser function*/
+	printed_chars = parser(format, f_list, arg_list);
+	va_end(arg_list);
+	return (printed_chars);
 }
